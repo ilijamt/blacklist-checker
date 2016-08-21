@@ -1,35 +1,78 @@
 package queue
 
-import "github.com/satori/go.uuid"
+import (
+	"github.com/satori/go.uuid"
+
+	"github.com/ilijamt/blacklist-checker/atomic"
+)
 
 type Worker struct {
-	ID    string
+	ID string
+
 	queue <-chan Job
 	stop  chan bool
+
+	jobStarted  chan bool
+	jobFinished chan bool
+
+	active    *atomic.IntNumber
+	processed *atomic.IntNumber
+
+	stopped *atomic.Bool
 }
 
 func NewWorker(workQueue chan Job) *Worker {
 	return &Worker{
-		ID:    uuid.NewV4().String(),
+		ID: uuid.NewV4().String(),
+
 		queue: workQueue,
-		stop:  make(chan bool, 1),
+		stop:  make(chan bool),
+
+		jobStarted:  make(chan bool),
+		jobFinished: make(chan bool),
+
+		stopped: &atomic.Bool{},
+
+		active:    &atomic.IntNumber{},
+		processed: &atomic.IntNumber{},
 	}
 }
 
-func (w Worker) Start() {
+func (w *Worker) ActiveJobs() int64 {
+	return w.active.Value()
+}
+
+func (w *Worker) ProcessedJobs() int64 {
+	return w.processed.Value()
+}
+
+func (w *Worker) IsStopped() bool {
+	return w.stopped.Value()
+}
+
+func (w *Worker) Start() {
 	go func() {
 		for {
 			select {
 			case job := <-w.queue:
-				job.Start()
+				go func() {
+					job.Start(w.jobFinished)
+					w.jobStarted <- true
+				}()
+			case <-w.jobStarted:
+				w.active.Incr()
+			case <-w.jobFinished:
+				w.active.Decr()
+				w.processed.Incr()
 			case <-w.stop:
+				w.stopped.True()
 				return
 			}
 		}
 	}()
 }
 
-func (w Worker) Stop() {
+func (w *Worker) Stop() {
 	go func() {
 		w.stop <- true
 	}()

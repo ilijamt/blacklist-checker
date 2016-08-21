@@ -4,6 +4,7 @@ BIN_FILE=ip-blacklist-checker
 COVERAGE_DIR=${BUILD_DIR}/coverage
 COVERAGE_MODE=count
 GOPACKAGES=./...
+GOFILES_GLIDE=$(shell glide novendor)
 GOFILES_NOVENDOR=$(shell find . -type f -name '*.go' -not -path "*/vendor/*")
 VERSION_FILE=VERSION
 
@@ -27,7 +28,7 @@ install:
 .PHONY: check
 check:
 	gofmt -l ${GOFILES_NOVENDOR} | (! grep . -q) || (echo "Code differs from gofmt's style" && false)
-	go vet ${GOPACKAGES}
+	go vet ${GOFILES_GLIDE}
 
 # Runs gofmt -w on the project's source code, modifying any files that do not
 # match its style.
@@ -44,14 +45,14 @@ simplify:
 # Run the tests for the application
 .PHONY: test
 test:
-	go test ./...
+	go test $(shell glide novendor) -v
 
 # Run the coverage tests for the application
 .PHONY: test-coverage
 test-coverage:
 	rm -vrf ${COVERAGE_DIR} ${BUILD_DIR}/coverage.html
 	mkdir ${COVERAGE_DIR}/profiles -p
-	for pkg in `go list ./...`; do \
+	for pkg in `go list $(shell glide novendor)`; do \
 		cvrfile=$$(basename "$$pkg"); \
 		go test --covermode=${COVERAGE_MODE} --coverprofile="${COVERAGE_DIR}/profiles/$$cvrfile.profile" "$$pkg"; \
 	done
@@ -71,4 +72,5 @@ endif
 
 .PHONY: lint
 lint:
-	golint ./...
+	@golint
+	@golint queue
