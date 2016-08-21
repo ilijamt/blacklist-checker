@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	Name         string = "ip-blacklist-checker"
+	Name         string = "blacklist-checker"
 	BuildVersion string
 	BuildHash    string
 	BuildDate    string
