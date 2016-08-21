@@ -1,0 +1,11 @@
+package: github.com/ilijamt/blacklist-checker
+import:
+- package: github.com/satori/go.uuid
+  version: v1.1.0
+- package: gopkg.in/alecthomas/kingpin.v2
+  version: v2.2.2
+testImport:
+- package: github.com/stretchr/testify
+  version: v1.1.3
+  subpackages:
+  - assert
