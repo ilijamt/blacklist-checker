@@ -9,7 +9,7 @@ import (
 
 type TestWorkerJobSimple struct{}
 
-func (j *TestWorkerJobSimple) Start(finished chan<- bool) {
+func (j *TestWorkerJobSimple) Start(finished chan<- interface{}) {
 	finished <- true
 }
 

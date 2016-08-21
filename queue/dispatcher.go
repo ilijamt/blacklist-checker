@@ -8,6 +8,7 @@ type Dispatcher struct {
 	totalWorkers int
 
 	queue chan Job
+	stop  *atomic.Bool
 
 	jobsDispatched *atomic.IntNumber
 }
@@ -17,6 +18,7 @@ func NewDispatcher(totalWorkers int, queueSize int) *Dispatcher {
 		totalWorkers:   totalWorkers,
 		workers:        make(map[string]*Worker),
 		queue:          make(chan Job, queueSize),
+		stop:           &atomic.Bool{},
 		jobsDispatched: &atomic.IntNumber{},
 	}
 }
@@ -36,12 +38,15 @@ func (d Dispatcher) TotalDispatchedJobs() int64 {
 }
 
 func (d Dispatcher) Stop() {
+	d.stop.True()
 	for id := range d.workers {
-		go d.workers[id].Stop()
+		d.workers[id].Stop()
 	}
 }
 
 func (d Dispatcher) Queue(j Job) {
-	d.queue <- j
-	d.jobsDispatched.Incr()
+	if !d.stop.Value() {
+		d.queue <- j
+		d.jobsDispatched.Incr()
+	}
 }

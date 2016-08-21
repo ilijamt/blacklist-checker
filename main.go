@@ -19,6 +19,7 @@ var (
 	verbose     = kingpin.Flag("verbose", "Verbose mode.").Bool()
 	version     = kingpin.Flag("version", "Show version and terminate").Short('v').Bool()
 	baseversion = kingpin.Flag("baseversion", "Show base version").Short('b').Bool()
+	nameserver  = kingpin.Flag("nameserver", "Name server to use").Short('n').Default("8.8.8.8").String()
 )
 
 func init() {
