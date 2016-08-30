@@ -105,7 +105,7 @@ user	1m5.324s
 sys	0m4.324s
 ```
 
-#### list
+#### Blacklists
 
 Currently there are 59 blacklists in [blacklists.go](blacklists.go)
 
