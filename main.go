@@ -48,7 +48,7 @@ var (
 	version = app.Flag("version", "Show version and terminate").Short('v').Bool()
 
 	nameserver = app.Flag("nameserver", "Name server to use").Default("8.8.8.8:53").TCP()
-	queueSize  = app.Flag("queue", "How many request to process at one time").Default("10").Int()
+	queueSize  = app.Flag("queue", "How many request to process at one time").Default("25").Int()
 	//	blacklistFile = app.Flag("blacklist", "A blacklist file to use").ExistingFile()
 
 	checkIp = app.Command("ip", "Check IP against available blacklists")
@@ -110,7 +110,7 @@ func ProcessQueue() {
 		case qi := <-queue:
 			go CheckIfBlacklisted(response, qi.IP, qi.Blacklist)
 		case qr := <-response:
-			fmt.Printf("%s = %s\n", qr.FQDN, strings.Join(qr.Response, ","))
+			fmt.Printf("%s blacklisted on %s with %s\n", qr.IP.String(), qr.Blacklist, strings.Join(qr.Response, ","))
 		}
 	}
 
