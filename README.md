@@ -51,7 +51,7 @@ sys	0m0.004s
 
 ### CIDR
 ```bash
-$ time blacklist-checker ip 46.217.104.208
+$ time blacklist-checker cidr 46.217.104.208/25
 46.217.104.0 blacklisted on dnsbl-2.uceprotect.net with 127.0.0.2
 46.217.104.0 blacklisted on dnsbl-3.uceprotect.net with 127.0.0.2
 46.217.104.3 blacklisted on dnsbl-1.uceprotect.net with 127.0.0.2
