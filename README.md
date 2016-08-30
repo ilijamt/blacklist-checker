@@ -1,10 +1,53 @@
 Blacklist Checker
 ================
 
-Check if your IP is blacklisted or not.
+Check if your IP or CIDR is blacklisted or not.
 
-To build/install just pull the code and run **make build** or **make install**, there is also autocomplete files for bash and zsh
+There are probably faster ways to do this so if anyone want's to cleanup or send a PR feel free to do so
 
+## Getting Started with Blacklist Checker
+
+### Requirements
+
+* [Golang](https://golang.org/dl/) >= 1.6
+* [Glide](https://github.com/Masterminds/glide) >= 0.10.0
+
+### Autocomplete 
+
+You know what to do with this
+
+* [Bash](blacklist-checker.bash)
+* [Zsh](blacklist-checker.zsh)
+
+### Dependencies 
+
+This project uses glide to manage dependencies so download them before trying to build/install by running 
+
+```bash
+glide install
+```
+
+### Build
+
+To build the binary for Blacklist Checker run the command below. This will generate a binary
+in the bin directory with the name blacklist-checker.
+
+```bash
+make build
+```
+
+### Install
+
+To install the binary for Blacklist Checker run the command below. This will generate a binary
+in $GOPATH/bin directory with the name blacklist-checker.
+
+```bash
+make install
+```
+
+### Run
+
+### Help
 ```bash
 $ blacklist-checker --help
 usage: blacklist-checker [<flags>] <command> [<args> ...]
@@ -32,11 +75,7 @@ Commands:
     List available blacklists
 ```
 
-There are probably faster ways to do this so if anyone want's to cleanup or send a PR feel free to do so
-
-Currently there are 59 blacklists in [blacklists.go](blacklists.go)
-
-### IP 
+#### IP 
 
 ```bash
 $ time blacklist-checker ip 46.217.104.208
@@ -49,7 +88,7 @@ user	0m0.004s
 sys	0m0.004s
 ```
 
-### CIDR
+#### CIDR
 ```bash
 $ time blacklist-checker cidr 46.217.104.208/25
 46.217.104.0 blacklisted on dnsbl-2.uceprotect.net with 127.0.0.2
@@ -66,3 +105,69 @@ user	1m5.324s
 sys	0m4.324s
 ```
 
+#### list
+
+Currently there are 59 blacklists in [blacklists.go](blacklists.go)
+
+```bash
+$ blacklist-checker list
+access.redhawk.org
+b.barracudacentral.org
+bl.spamcannibal.org
+bl.spamcop.net
+blackholes.mail-abuse.org
+bogons.cymru.com
+cbl.abuseat.org
+cbl.anti-spam.org.cn
+cdl.anti-spam.org.cn
+combined.njabl.org
+csi.cloudmark.com
+db.wpbl.info
+dnsbl-1.uceprotect.net
+dnsbl-2.uceprotect.net
+dnsbl-3.uceprotect.net
+dnsbl.dronebl.org
+dnsbl.inps.de
+dnsbl.njabl.org
+dnsbl.sorbs.net
+drone.abuse.ch
+dsn.rfc-ignorant.org
+dul.dnsbl.sorbs.net
+dyna.spamrats.com
+http.dnsbl.sorbs.net
+httpbl.abuse.ch
+ips.backscatterer.org
+ix.dnsbl.manitu.net
+korea.services.net
+misc.dnsbl.sorbs.net
+multi.surbl.org
+netblock.pedantic.org
+noptr.spamrats.com
+opm.tornevall.org
+pbl.spamhaus.org
+psbl.surriel.com
+query.senderbase.org
+rbl-plus.mail-abuse.org
+rbl.efnetrbl.org
+rbl.interserver.net
+rbl.spamlab.com
+rbl.suresupport.com
+relays.mail-abuse.org
+sbl.spamhaus.org
+short.rbl.jp
+smtp.dnsbl.sorbs.net
+socks.dnsbl.sorbs.net
+spam.dnsbl.sorbs.net
+spam.spamrats.com
+spamguard.leadmon.net
+spamrbl.imp.ch
+tor.dan.me.uk
+ubl.unsubscore.com
+virbl.bit.nl
+virus.rbl.jp
+web.dnsbl.sorbs.net
+wormrbl.imp.ch
+xbl.spamhaus.org
+zen.spamhaus.org
+zombie.dnsbl.sorbs.net
+```

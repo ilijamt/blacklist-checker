@@ -52,30 +52,6 @@ simplify:
 test:
 	go test $(shell glide novendor) -v
 
-# Run the coverage tests for the application
-.PHONY: test-coverage
-test-coverage:
-	rm -vrf ${COVERAGE_DIR} ${BUILD_DIR}/coverage.html
-	mkdir ${COVERAGE_DIR}/profiles -p
-	for pkg in `go list $(shell glide novendor)`; do \
-		cvrfile=$$(basename "$$pkg"); \
-		go test --covermode=${COVERAGE_MODE} --coverprofile="${COVERAGE_DIR}/profiles/$$cvrfile.profile" "$$pkg"; \
-	done
-	$(MAKE) test-coverage-assemble
-
-.PHONY: test-coverage-assemble
-test-coverage-assemble:
-ifneq ($(wildcard $(COVERAGE_DIR)/profiles/*.profile),)
-	touch ${COVERAGE_DIR}/coverprofile
-	echo "mode: ${COVERAGE_MODE}" > ${COVERAGE_DIR}/coverprofile
-	grep -h -v "^mode:" ${COVERAGE_DIR}/profiles/*.profile >> ${COVERAGE_DIR}/coverprofile
-	go tool cover -html=${COVERAGE_DIR}/coverprofile -o "${BUILD_DIR}/coverage.html"
-else
-	rm -vrf ${BUILD_DIR}
-	@echo "No profiles generated, no tests found"
-endif
-
 .PHONY: lint
 lint:
 	@golint
-	@golint queue
