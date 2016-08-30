@@ -3,6 +3,8 @@ Blacklist Checker
 
 Check if your IP is blacklisted or not.
 
+To build/install just pull the code and run **make build** or **make install**, there is also autocomplete files for bash and zsh
+
 ```bash
 $ blacklist-checker --help
 usage: blacklist-checker [<flags>] <command> [<args> ...]
