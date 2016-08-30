@@ -1,6 +1,6 @@
 BUILD_DIR=build
 BIN_DIR=bin
-BIN_FILE=ip-blacklist-checker
+BIN_FILE=blacklist-checker
 COVERAGE_DIR=${BUILD_DIR}/coverage
 COVERAGE_MODE=count
 GOPACKAGES=./...
@@ -23,6 +23,11 @@ build:
 .PHONY: install
 install: 
 	go build -ldflags "-X 'main.BuildVersion=${VERSION}' -X 'main.BuildHash=${BUILD_VERSION}' -X 'main.BuildDate=${BUILD_DATE}'" -o "${GOPATH}/bin/${BIN_FILE}" .
+
+.PHONY: autocomplete
+autocomplete: build
+	bin/${BIN_FILE} --completion-script-bash > ${BIN_FILE}.bash
+	bin/${BIN_FILE} --completion-script-zsh > ${BIN_FILE}.zsh
 
 # Checks project and source code if everything is according to standard
 .PHONY: check
