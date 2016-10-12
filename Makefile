@@ -2,6 +2,7 @@ BUILD_DIR=build
 BIN_DIR=bin
 BIN_FILE=blacklist-checker
 COVERAGE_DIR=${BUILD_DIR}/coverage
+CONTRIB_DIR="contrib"
 COVERAGE_MODE=count
 GOPACKAGES=./...
 GOFILES_GLIDE=$(shell glide novendor)
@@ -17,17 +18,18 @@ else
 endif
 
 .PHONY: build
-build: 
+build:
 	go build -ldflags "-X 'main.BuildVersion=${VERSION}' -X 'main.BuildHash=${BUILD_VERSION}' -X 'main.BuildDate=${BUILD_DATE}'" -o "${BIN_DIR}/${BIN_FILE}" .
+	${BIN_DIR}/${BIN_FILE} --completion-script-bash > ${CONTRIB_DIR}/.${BIN_FILE}.bash
+	${BIN_DIR}/${BIN_FILE} --completion-script-zsh > ${CONTRIB_DIR}/.${BIN_FILE}.zsh
+	${BIN_DIR}/${BIN_FILE} --help-man > ${CONTRIB_DIR}/${BIN_FILE}.1
 
 .PHONY: install
-install: 
-	go build -ldflags "-X 'main.BuildVersion=${VERSION}' -X 'main.BuildHash=${BUILD_VERSION}' -X 'main.BuildDate=${BUILD_DATE}'" -o "${GOPATH}/bin/${BIN_FILE}" .
-
-.PHONY: autocomplete
-autocomplete: build
-	bin/${BIN_FILE} --completion-script-bash > ${BIN_FILE}.bash
-	bin/${BIN_FILE} --completion-script-zsh > ${BIN_FILE}.zsh
+install: build
+	cp ${BIN_DIR}/${BIN_FILE} ${GOPATH}/bin/${BIN_FILE}
+	cp ${CONTRIB_DIR}/.${BIN_FILE}.bash ${CONTRIB_DIR}/.${BIN_FILE}.zsh ${HOME}
+	touch "${HOME}/.bash_completion"
+	grep -q -F '[ -s "${HOME}/.${BIN_FILE}.bash" ] && . ${HOME}/.${BIN_FILE}.bash' ${HOME}/.bash_completion || echo '[ -s "${HOME}/.${BIN_FILE}.bash" ] && . ${HOME}/.${BIN_FILE}.bash' >> "${HOME}/.bash_completion"
 
 # Checks project and source code if everything is according to standard
 .PHONY: check

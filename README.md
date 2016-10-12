@@ -16,10 +16,10 @@ There are probably faster ways to do this so if anyone want's to cleanup or send
 
 You know what to do with this
 
-* [Bash](blacklist-checker.bash)
-* [Zsh](blacklist-checker.zsh)
+* [Bash](contrib/blacklist-checker.bash)
+* [Zsh](contrib/blacklist-checker.zsh)
 
-### Dependencies 
+### Dependencies
 
 This project uses glide to manage dependencies so download them before trying to build/install by running 
 
