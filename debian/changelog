@@ -1,0 +1,7 @@
+blacklist-checker (0.1.1) unstable; urgency=low
+
+  * Initial release.
+  * Check a single IP against all available blacklists
+  * Check a CIDR against all available blacklists
+
+ -- Ilija Matoski <ilijamt@gmail.com>  Wed, 12 Oct 2016 22:17:43 +0200

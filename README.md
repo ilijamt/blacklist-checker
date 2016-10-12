@@ -5,6 +5,19 @@ Check if your IP or CIDR is blacklisted or not.
 
 There are probably faster ways to do this so if anyone want's to cleanup or send a PR feel free to do so
 
+## Installation
+
+If you don't want to compile your own version, you can use the following repository to install it 
+
+### Debian
+
+```bash
+echo "deb http://packages.matoski.com/ debian main" | sudo tee /etc/apt/sources.list.d/packages-matoski-com.list
+curl -s http://packages.matoski.com/keyring.gpg | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install blacklist-checker
+```
+
 ## Getting Started with Blacklist Checker
 
 ### Requirements

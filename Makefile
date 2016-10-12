@@ -57,3 +57,7 @@ test:
 .PHONY: lint
 lint:
 	@golint
+
+.PHONY: package
+package:
+	debuild --preserve-env --preserve-envvar PATH -us -uc
