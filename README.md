@@ -39,7 +39,7 @@ make build
 ### Install
 
 To install the binary for Blacklist Checker run the command below. This will generate a binary
-in $GOPATH/bin directory with the name blacklist-checker.
+in $GOPATH/bin directory with the name blacklist-checker, and add the bash autocomplete files.
 
 ```bash
 make install
