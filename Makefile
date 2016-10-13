@@ -60,4 +60,4 @@ lint:
 
 .PHONY: package
 package:
-	debuild --preserve-env --preserve-envvar PATH -us -uc
+	debuild --preserve-env --preserve-envvar PATH -us -uc -d
