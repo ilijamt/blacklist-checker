@@ -70,13 +70,15 @@ Fast blacklist checker application
 Flags:
   -h, --help                   Show context-sensitive help (also try --help-long and --help-man).
       --verbose                Verbose mode.
-  -v, --version                Show version and terminate
       --nameserver=8.8.8.8:53  Name server to use
       --queue=25               How many request to process at one time
 
 Commands:
   help [<command>...]
     Show help.
+
+  version
+    Show version and terminate
 
   ip <ip-address>
     Check IP against available blacklists

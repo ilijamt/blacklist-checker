@@ -24,13 +24,6 @@ type QueueItem struct {
 }
 
 var (
-	Name        string = "blacklist-checker"
-	Description string = "Fast blacklist checker application"
-
-	BuildVersion string
-	BuildHash    string
-	BuildDate    string
-
 	command string
 	results []QueueItem
 	hosts   []string
@@ -45,7 +38,7 @@ var (
 var (
 	app     = kingpin.New(Name, Description)
 	verbose = app.Flag("verbose", "Verbose mode.").Bool()
-	version = app.Flag("version", "Show version and terminate").Short('v').Bool()
+	version = app.Command("version", "Show version and terminate").Action(ShowVersion)
 
 	nameserver = app.Flag("nameserver", "Name server to use").Default("8.8.8.8:53").TCP()
 	queueSize  = app.Flag("queue", "How many request to process at one time").Default("25").Int()
@@ -62,14 +55,16 @@ var (
 	list = app.Command("list", "List available blacklists")
 )
 
+func ShowVersion(c *kingpin.ParseContext) error {
+	fmt.Printf("%s version %s build %s (%s), built on %s, by %s\n", Name, BuildVersion, BuildHash, runtime.GOARCH, BuildDate, Maintainer)
+	os.Exit(0)
+	return nil
+}
+
 func init() {
+
 	app.HelpFlag.Short('h')
 	command = kingpin.MustParse(app.Parse(os.Args[1:]))
-
-	if *version {
-		fmt.Printf("%s version %s build %s (%s), build on %s\n", Name, BuildVersion, BuildHash, runtime.GOARCH, BuildDate)
-		os.Exit(0)
-	}
 
 	queue = make(chan QueueItem, *queueSize)
 	response = make(chan QueueItem)
