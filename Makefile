@@ -54,6 +54,11 @@ check:
 	gofmt -l ${GOFILES_NOVENDOR} | (! grep . -q) || (echo "Code differs from gofmt's style" && false)
 	go vet ${GOFILES_GLIDE}
 
+.PHONY: clean
+clean:
+	rm -f ${BIN_DIR}/${BIN_FILE}*
+	rm -rf "${BUILD_DIR}"
+
 # Runs gofmt -w on the project's source code, modifying any files that do not
 # match its style.
 .PHONY: fmt
@@ -78,6 +83,14 @@ lint:
 .PHONY: package
 package:
 	debuild --preserve-env --preserve-envvar PATH -us -uc -d
+
+.PHONY: release-build-github
+release-build-github: 
+	GOOS=linux GOARCH=amd64 make build-custom
+	GOOS=linux GOARCH=386 make build-custom
+	GOOS=linux GOARCH=arm make build-custom
+	GOOS=darwin GOARCH=386 make build-custom
+	GOOS=darwin GOARCH=amd64 make build-custom
 
 .PHONY: cross-build
 cross-build:
