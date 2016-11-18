@@ -1,3 +1,10 @@
+blacklist-checker (0.1.4) UNRELEASED; urgency=medium
+
+  * Fixed some bugs with a blacklist
+  * Added couple of more blacklists
+
+ -- Ilija Matoski <ilijamt@x1.home.lan>  Fri, 18 Nov 2016 23:34:18 +0100
+
 blacklist-checker (0.1.3) unstable; urgency=medium
 
   * Added 2 more blacklist

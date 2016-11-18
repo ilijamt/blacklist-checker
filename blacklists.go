@@ -3,6 +3,7 @@ package main
 var BlacklistEntries []string = []string{
 	"access.redhawk.org",
 	"b.barracudacentral.org",
+	"bad.psky.me",
 	"bl.spamcannibal.org",
 	"bl.spamcop.net",
 	"blackholes.mail-abuse.org",
@@ -57,12 +58,10 @@ var BlacklistEntries []string = []string{
 	"virus.rbl.jp",
 	"web.dnsbl.sorbs.net",
 	"wormrbl.imp.ch",
+	"xbl.abuseat.org",
 	"xbl.spamhaus.org",
 	"zen.spamhaus.org",
-	"cbl.spamhaus.org",
 	"zombie.dnsbl.sorbs.net",
-	"bad.psky.me",
-	"xbl.spamhaus.org",
 }
 
 func GetBlacklistHosts() []string {

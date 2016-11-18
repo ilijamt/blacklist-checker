@@ -41,7 +41,7 @@ var (
 	version = app.Command("version", "Show version and terminate").Action(ShowVersion)
 
 	nameserver = app.Flag("nameserver", "Name server to use").Default("8.8.8.8:53").TCP()
-	queueSize  = app.Flag("queue", "How many request to process at one time").Default("25").Int()
+	queueSize  = app.Flag("queue", "How many request to process at one time").Default("15").Int()
 	//	blacklistFile = app.Flag("blacklist", "A blacklist file to use").ExistingFile()
 
 	checkIp = app.Command("ip", "Check IP against available blacklists")
@@ -105,7 +105,9 @@ func ProcessQueue() {
 		case qi := <-queue:
 			go CheckIfBlacklisted(response, qi.IP, qi.Blacklist)
 		case qr := <-response:
-			fmt.Printf("%s blacklisted on %s with %s\n", qr.IP.String(), qr.Blacklist, strings.Join(qr.Response, ","))
+			if len(qr.Response) > 0 {
+				fmt.Printf("%s blacklisted on %s with %s\n", qr.IP.String(), qr.Blacklist, strings.Join(qr.Response, ","))
+			}
 		}
 	}
 
@@ -148,7 +150,7 @@ func CheckIfBlacklisted(channel chan<- QueueItem, IP net.IP, blacklist string) {
 	r, _, err := client.Exchange(m, (*nameserver).String())
 	if err != nil {
 		if *verbose {
-			fmt.Printf("Failed to query: %v\n", err)
+			fmt.Printf("Failed to query: %v for %v on %v with query %v\n", err, qi.IP, qi.Blacklist, qi.FQDN)
 		}
 		qi.Error = err
 		wg.Add(1)
@@ -160,7 +162,10 @@ func CheckIfBlacklisted(channel chan<- QueueItem, IP net.IP, blacklist string) {
 	}
 
 	if r.Rcode != dns.RcodeSuccess {
-		qi.Error = errors.New(fmt.Sprintf("Rcode: %v is different from %v", r.Rcode, dns.RcodeSuccess))
+		qi.Error = errors.New(fmt.Sprintf("Recieved Rcode: %v is different from %v (RcodeSuccess) for %v", r.Rcode, dns.RcodeSuccess, qi.FQDN))
+		if *verbose {
+			fmt.Printf("%v\n", qi.Error)
+		}
 		return
 	}
 
@@ -173,6 +178,10 @@ func CheckIfBlacklisted(channel chan<- QueueItem, IP net.IP, blacklist string) {
 	}
 
 	qi.Response = resp
+
+	if *verbose {
+		fmt.Printf("Successfully queried %v with %v response\n", qi.FQDN, qi.Response)
+	}
 
 	channel <- qi
 
