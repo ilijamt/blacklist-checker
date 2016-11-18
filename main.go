@@ -137,12 +137,19 @@ func CheckIfBlacklisted(channel chan<- QueueItem, IP net.IP, blacklist string) {
 		FQDN:      fmt.Sprintf("%s.%s.", ReverseIP(IP.String()), blacklist),
 	}
 
+	if *verbose {
+		fmt.Printf("Checking %s\n", qi.FQDN)
+	}
+
 	m := new(dns.Msg)
 	m.SetQuestion(qi.FQDN, dns.TypeA)
 	m.RecursionDesired = true
 
 	r, _, err := client.Exchange(m, (*nameserver).String())
 	if err != nil {
+		if *verbose {
+			fmt.Printf("Failed to query: %v\n", err)
+		}
 		qi.Error = err
 		wg.Add(1)
 		queue <- QueueItem{

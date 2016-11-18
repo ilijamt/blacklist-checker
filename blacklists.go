@@ -59,7 +59,10 @@ var BlacklistEntries []string = []string{
 	"wormrbl.imp.ch",
 	"xbl.spamhaus.org",
 	"zen.spamhaus.org",
+	"cbl.spamhaus.org",
 	"zombie.dnsbl.sorbs.net",
+	"bad.psky.me",
+	"xbl.spamhaus.org",
 }
 
 func GetBlacklistHosts() []string {
