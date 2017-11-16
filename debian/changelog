@@ -1,4 +1,10 @@
-blacklist-checker (0.1.4) UNRELEASED; urgency=medium
+blacklist-checker (0.1.5) unstable; urgency=medium
+
+  * Removed an invalid blacklist address from the list
+
+ -- Ilija Matoski <ilijamt@gmail.com>  Fri, 16 Nov 2017 19:52:21 +0000
+
+blacklist-checker (0.1.4) unstable; urgency=medium
 
   * Fixed some bugs with a blacklist
   * Added couple of more blacklists

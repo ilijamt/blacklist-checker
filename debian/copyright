@@ -4,9 +4,9 @@ Upstream-contact: Ilija Matoski
 Source: http://github.com/ilijamt/proxy-checker
 
 Files: *
-Copyright: Copyright 2016 Ilija Matoski <ilijamt@gmail.com>
+Copyright: Copyright 2017 Ilija Matoski <ilijamt@gmail.com>
 License: Apache-2.0
  
 Files: debian/*
-Copyright: Copyright 2016 Ilija Matoski <ilijamt@gmail.com>
+Copyright: Copyright 2017 Ilija Matoski <ilijamt@gmail.com>
 License: Apache-2.0

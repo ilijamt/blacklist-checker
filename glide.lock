@@ -1,5 +1,5 @@
-hash: b320811dda18519f537e6c4440b50d6d7b44e6f99307d9e3336f2471304495fd
-updated: 2016-11-18T21:41:40.62929539+01:00
+hash: e5e7ce3405a2f86b5cf86ccc035508dbef9525665ae6c50243eb93bc30b885da
+updated: 2017-11-16T20:36:04.396523192+01:00
 imports:
 - name: github.com/alecthomas/template
   version: a0175ee3bccc567396460bf5acd36800cb10c49c
@@ -8,11 +8,13 @@ imports:
 - name: github.com/alecthomas/units
   version: 2efee857e7cfd4f3d0138cc3cbb1b4966962b93a
 - name: github.com/miekg/dns
-  version: 58f52c57ce9df13460ac68200cef30a008b9c468
+  version: 822ae18e7187e1bbde923a37081f6c1b8e9ba68a
+  subpackages:
+  - internal/socket
 - name: github.com/satori/go.uuid
   version: 879c5887cd475cd7864858769793b2ceb0d44feb
 - name: gopkg.in/alecthomas/kingpin.v2
-  version: e5900212cbf65b181d3d8e08308ef06a01d117cf
+  version: 1087e65c9441605df944fb12c33f0fe7072d18ca
 testImports:
 - name: github.com/stretchr/testify
   version: f390dcf405f7b83c997eac1b06768bb9f44dec18

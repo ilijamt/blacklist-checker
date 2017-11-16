@@ -3,7 +3,6 @@ package main
 var BlacklistEntries []string = []string{
 	"access.redhawk.org",
 	"b.barracudacentral.org",
-	"bad.psky.me",
 	"bl.spamcannibal.org",
 	"bl.spamcop.net",
 	"blackholes.mail-abuse.org",

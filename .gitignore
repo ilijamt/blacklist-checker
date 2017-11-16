@@ -2,4 +2,10 @@ build/
 vendor/
 .glide/
 bin/
-blacklist-checker
+.idea/
+debian/blacklist-checker/
+debian/blacklist-checker.bash-completion
+debian/blacklist-checker.debhelper.log
+debian/blacklist-checker.substvars
+debian/debhelper-build-stamp
+debian/files

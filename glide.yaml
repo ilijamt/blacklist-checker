@@ -1,9 +1,9 @@
 package: github.com/ilijamt/blacklist-checker
 import:
 - package: github.com/satori/go.uuid
-  version: v1.1.0
+  version: ^1.x
 - package: gopkg.in/alecthomas/kingpin.v2
-  version: v2.2.2
+  version: ^2.x
 - package: github.com/miekg/dns
 testImport:
 - package: github.com/stretchr/testify
