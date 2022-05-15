@@ -3,6 +3,7 @@ module github.com/ilijamt/blacklist_checker
 go 1.18
 
 require (
+	github.com/ilijamt/netprivate v0.1.0
 	github.com/miekg/dns v1.1.49
 	github.com/rs/zerolog v1.26.1
 	github.com/spf13/cobra v1.4.0

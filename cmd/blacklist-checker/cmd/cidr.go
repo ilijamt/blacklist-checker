@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/ilijamt/blacklist_checker"
 	"github.com/ilijamt/blacklist_checker/internal/check"
-	"github.com/ilijamt/blacklist_checker/internal/ip"
 	"github.com/ilijamt/blacklist_checker/internal/utils"
+	"github.com/ilijamt/netprivate"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"golang.org/x/sync/semaphore"
@@ -24,7 +24,7 @@ var cidrCmd = &cobra.Command{
 			return err
 		}
 
-		if ip.IsPrivate(i) {
+		if netprivate.Is(i) {
 			return fmt.Errorf("ip: %s is in the private range", i)
 		}
 

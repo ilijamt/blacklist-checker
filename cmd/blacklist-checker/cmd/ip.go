@@ -6,6 +6,7 @@ import (
 	"github.com/ilijamt/blacklist_checker"
 	"github.com/ilijamt/blacklist_checker/internal/check"
 	"github.com/ilijamt/blacklist_checker/internal/utils"
+	"github.com/ilijamt/netprivate"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"golang.org/x/sync/semaphore"
@@ -22,6 +23,11 @@ var ipCmd = &cobra.Command{
 		if ip == nil {
 			return fmt.Errorf("invalid IP address: %s", args[0])
 		}
+
+		if netprivate.Is(ip) {
+			return fmt.Errorf("ip: %s is in the private range", ip)
+		}
+
 		return nil
 	},
 	RunE: func(cmd *cobra.Command, args []string) (err error) {
