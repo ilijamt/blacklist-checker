@@ -13,9 +13,20 @@ There are probably faster ways to do this so if anyone want's to cleanup or send
 
 * [Golang](https://golang.org/dl/) >= 1.8
 
-### Install
+## Install
 
-If you want to install the application either compile it your self, or download it from the Github release pages
+### Pre-compiled binary
+
+#### manually
+
+Download the pre-compiled binaries from the [releases](https://github.com/ilijamt/blacklist-checker/releases) page.
+
+#### homebrew
+
+```bash
+brew tap ilijamt/tap
+brew install blacklist-checker
+```
 
 ### Help
 ```bash
