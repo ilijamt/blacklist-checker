@@ -1,4 +1,4 @@
-package main
+package blacklist_checker
 
 var (
 	// Name is the application name
@@ -7,8 +7,8 @@ var (
 	// Description is the applications description
 	Description string = "Fast blacklist checker application"
 
-	// Maintainer information
-	Maintainer = "Ilija Matoski <ilijamt@gmail.com>"
+	// Author information
+	Author = "Ilija Matoski <ilijamt@gmail.com>"
 
 	// BuildVersion is the version of the build
 	BuildVersion string

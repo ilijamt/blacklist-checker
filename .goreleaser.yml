@@ -1,0 +1,62 @@
+project_name: "blacklist-checker"
+
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+    - go mod download
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    id: "blacklist-checker"
+    main: ./cmd/blacklist-checker/main.go
+    ldflags:
+      - "-extldflags '-static'"
+      - "-X 'github.com/ilijamt/blacklist_checker.BuildVersion={{ .Version }}'"
+      - "-X 'github.com/ilijamt/blacklist_checker.BuildHash={{ .FullCommit }}'"
+      - "-X 'github.com/ilijamt/blacklist_checker.BuildDate={{ .Date }}'"
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+    goos:
+      - linux
+      - darwin
+      - windows
+
+checksum:
+  name_template: '{{ .ProjectName }}_checksums.txt'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - Merge pull request
+      - Merge branch
+
+archives:
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    replacements:
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+
+release:
+  github:
+    owner: ilijamt
+    name: blacklist-checker
+
+brews:
+  - tap:
+      owner: ilijamt
+      name: homebrew-tap
+    folder: Formula
+    homepage:  https://github.com/ilijamt/blacklist-checker
+    description: A simple tool that helps you check if your IP or CIDR is blacklisted or not.
+    test: |
+      system "#{bin}/blacklist-checker version"

@@ -7,128 +7,86 @@ There are probably faster ways to do this so if anyone want's to cleanup or send
 
 ## Installation
 
-If you don't want to compile your own version, you can use the following repository to install it 
-
-### Debian
-
-```bash
-echo "deb http://packages.matoski.com/ debian main" | sudo tee /etc/apt/sources.list.d/packages-matoski-com.list
-curl -s http://packages.matoski.com/keyring.gpg | sudo apt-key add -
-sudo apt-get update
-sudo apt-get install blacklist-checker
-```
-
 ## Getting Started with Blacklist Checker
 
 ### Requirements
 
-* [Golang](https://golang.org/dl/) >= 1.6
-* [Glide](https://github.com/Masterminds/glide) >= 0.10.0
-
-### Autocomplete 
-
-You know what to do with this
-
-* [Bash](contrib/blacklist-checker.bash)
-* [Zsh](contrib/blacklist-checker.zsh)
-
-### Dependencies
-
-This project uses glide to manage dependencies so download them before trying to build/install by running 
-
-```bash
-glide install
-```
-
-### Build
-
-To build the binary for Blacklist Checker run the command below. This will generate a binary
-in the bin directory with the name blacklist-checker.
-
-```bash
-make build
-```
+* [Golang](https://golang.org/dl/) >= 1.8
 
 ### Install
 
-To install the binary for Blacklist Checker run the command below. This will generate a binary
-in $GOPATH/bin directory with the name blacklist-checker, and add the bash autocomplete files.
-
-```bash
-make install
-```
-
-### Run
+If you want to install the application either compile it your self, or download it from the Github release pages
 
 ### Help
 ```bash
-$ blacklist-checker --help
-usage: blacklist-checker [<flags>] <command> [<args> ...]
+$ blacklist-checker
+A simple tool that helps you check if your IP or CIDR is blacklisted or not.
 
-Fast blacklist checker application
+Usage:
+  blacklist-checker [command]
+
+Available Commands:
+  check       Check available blacklists.
+  completion  Generate the autocompletion script for the specified shell
+  help        Help about any command
+  list        List available blacklists.
+  version     Shows the version of the application
 
 Flags:
-  -h, --help                   Show context-sensitive help (also try --help-long and --help-man).
-      --verbose                Verbose mode.
-      --nameserver=8.8.8.8:53  Name server to use
-      --queue=25               How many request to process at one time
+      --dsnbl string   DNSBL file to use, if empty it uses the internal list, should be a list of DNSBL to use, each one on a new line
+  -h, --help           help for blacklist-checker
 
-Commands:
-  help [<command>...]
-    Show help.
-
-  version
-    Show version and terminate
-
-  ip <ip-address>
-    Check IP against available blacklists
-
-  cidr <cidr-address>
-    Check CIDR against available blacklists
-
-  list
-    List available blacklists
+Use "blacklist-checker [command] --help" for more information about a command.                                                                                                                                                           /0.1s
 ```
 
 #### IP 
 
 ```bash
-$ time blacklist-checker ip 46.217.104.208
-46.217.104.208 blacklisted on b.barracudacentral.org with 127.0.0.2
-46.217.104.208 blacklisted on dnsbl-2.uceprotect.net with 127.0.0.2
-46.217.104.208 blacklisted on dnsbl-3.uceprotect.net with 127.0.0.2
-
-real	0m0.696s
-user	0m0.004s
-sys	0m0.004s
+$ blacklist-checker ip 46.217.104.208
+12:51AM INF processing dsnbl=56 queries=56
+12:51AM WRN  blacklisted=true dnsbl=b.barracudacentral.org ip=46.217.104.208 responses=["127.0.0.2"]
+12:51AM WRN  blacklisted=true dnsbl=pbl.spamhaus.org ip=46.217.104.208 responses=["127.0.0.11"]
+12:51AM WRN  blacklisted=true dnsbl=zen.spamhaus.org ip=46.217.104.208 responses=["127.0.0.11"]
+12:51AM INF Finished blacklisted=3 queries=56                                                                                                                                                                                            /2.6s
 ```
 
 #### CIDR
 ```bash
-$ time blacklist-checker cidr 46.217.104.208/25
-46.217.104.0 blacklisted on dnsbl-2.uceprotect.net with 127.0.0.2
-46.217.104.0 blacklisted on dnsbl-3.uceprotect.net with 127.0.0.2
-46.217.104.3 blacklisted on dnsbl-1.uceprotect.net with 127.0.0.2
-46.217.104.2 blacklisted on b.barracudacentral.org with 127.0.0.2
-46.217.104.2 blacklisted on web.dnsbl.sorbs.net with 127.0.0.7
-46.217.104.3 blacklisted on db.wpbl.info with 127.0.0.2
-46.217.104.1 blacklisted on dnsbl-2.uceprotect.net with 127.0.0.2
+$ blacklist-checker check cidr 46.217.104.208/28
+12:51AM INF processing dsnbl=56 queries=896
+12:51AM WRN  blacklisted=true dnsbl=b.barracudacentral.org ip=46.217.104.215 responses=["127.0.0.2"]
+12:51AM WRN  blacklisted=true dnsbl=b.barracudacentral.org ip=46.217.104.218 responses=["127.0.0.2"]
 ...
+12:51AM WRN  blacklisted=true dnsbl=b.barracudacentral.org ip=46.217.104.223 responses=["127.0.0.2"]
+12:51AM WRN  blacklisted=true dnsbl=pbl.spamhaus.org ip=46.217.104.208 responses=["127.0.0.11"]
+12:51AM WRN  blacklisted=true dnsbl=pbl.spamhaus.org ip=46.217.104.209 responses=["127.0.0.11"]
+...
+12:51AM WRN  blacklisted=true dnsbl=spam.dnsbl.sorbs.net ip=46.217.104.209 responses=["127.0.0.6"]
+12:51AM WRN  blacklisted=true dnsbl=spam.dnsbl.sorbs.net ip=46.217.104.221 responses=["127.0.0.6"]
+12:51AM WRN  blacklisted=true dnsbl=spam.dnsbl.sorbs.net ip=46.217.104.222 responses=["127.0.0.6"]
+...
+12:52AM WRN  blacklisted=true dnsbl=zen.spamhaus.org ip=46.217.104.222 responses=["127.0.0.11"]
+12:52AM WRN  blacklisted=true dnsbl=zen.spamhaus.org ip=46.217.104.218 responses=["127.0.0.11"]
+12:52AM INF Finished blacklisted=51 queries=896                                                                                                                                                                                         /17.8s
+```
 
-real	0m24.164s
-user	1m5.324s
-sys	0m4.324s
+#### Blacklist file format
+If you want to create your on black list file you want to use, you can use the format bellow, and specify it with the `--dsnbl` flag
+
+```shell
+$ cat my-dnsbl-list
+b.barracudacentral.org
+sbl.spamhaus.org
 ```
 
 #### Blacklists
 
-Currently there are 59 blacklists in [blacklists.go](blacklists.go)
+Currently there are 56 blacklists in [blacklists.go](blacklists.go)
 
 ```bash
 $ blacklist-checker list
 access.redhawk.org
 b.barracudacentral.org
-bl.spamcannibal.org
 bl.spamcop.net
 blackholes.mail-abuse.org
 bogons.cymru.com
@@ -138,9 +96,6 @@ cdl.anti-spam.org.cn
 combined.njabl.org
 csi.cloudmark.com
 db.wpbl.info
-dnsbl-1.uceprotect.net
-dnsbl-2.uceprotect.net
-dnsbl-3.uceprotect.net
 dnsbl.dronebl.org
 dnsbl.inps.de
 dnsbl.njabl.org
@@ -182,7 +137,8 @@ virbl.bit.nl
 virus.rbl.jp
 web.dnsbl.sorbs.net
 wormrbl.imp.ch
+xbl.abuseat.org
 xbl.spamhaus.org
 zen.spamhaus.org
-zombie.dnsbl.sorbs.net
+zombie.dnsbl.sorbs.net                                                                                                                                                                                                                   /0.1s
 ```

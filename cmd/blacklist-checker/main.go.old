@@ -40,7 +40,7 @@ var (
 	verbose = app.Flag("verbose", "Verbose mode.").Bool()
 	version = app.Command("version", "Show version and terminate").Action(ShowVersion)
 
-	nameserver = app.Flag("nameserver", "Name server to use").Default("8.8.8.8:53").TCP()
+	nameserver = app.Flag("nameserver", "Name server to use").Default("1.1.1.1:53").TCP()
 	queueSize  = app.Flag("queue", "How many request to process at one time").Default("15").Int()
 	//	blacklistFile = app.Flag("blacklist", "A blacklist file to use").ExistingFile()
 

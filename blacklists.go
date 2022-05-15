@@ -1,6 +1,12 @@
-package main
+package blacklist_checker
 
-var BlacklistEntries []string = []string{
+import (
+	"github.com/ilijamt/blacklist_checker/internal/utils"
+	"io/ioutil"
+	"strings"
+)
+
+var dnsbls = []string{
 	"access.redhawk.org",
 	"b.barracudacentral.org",
 	"bl.spamcop.net",
@@ -12,9 +18,6 @@ var BlacklistEntries []string = []string{
 	"combined.njabl.org",
 	"csi.cloudmark.com",
 	"db.wpbl.info",
-	"dnsbl-1.uceprotect.net",
-	"dnsbl-2.uceprotect.net",
-	"dnsbl-3.uceprotect.net",
 	"dnsbl.dronebl.org",
 	"dnsbl.inps.de",
 	"dnsbl.njabl.org",
@@ -62,6 +65,21 @@ var BlacklistEntries []string = []string{
 	"zombie.dnsbl.sorbs.net",
 }
 
-func GetBlacklistHosts() []string {
-	return BlacklistEntries
+func GetDNSBLs(file string) ([]string, error) {
+	var exists, _ = utils.FileExists(file)
+	if !exists {
+		return dnsbls, nil
+	}
+
+	fileBytes, err := ioutil.ReadFile(file)
+	if err != nil {
+		return []string{}, err
+	}
+
+	var vals []string
+	for _, s := range strings.Split(string(fileBytes), "\n") {
+		vals = append(vals, strings.TrimSpace(s))
+	}
+
+	return vals, nil
 }
