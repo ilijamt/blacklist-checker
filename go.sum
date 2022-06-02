@@ -3,8 +3,6 @@ github.com/cpuguy83/go-md2man/v2 v2.0.1/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46t
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
-github.com/ilijamt/netprivate v0.0.0-20220515013914-c80997dcbc06 h1:KIpxndIUwocUnOXIIh/JapQ5iRRfb6yRibjqNjhi4u0=
-github.com/ilijamt/netprivate v0.0.0-20220515013914-c80997dcbc06/go.mod h1:obKz9HQ69QXa1rOoqBLWhcsM6kqZOw3YFQhqJrwlHF8=
 github.com/ilijamt/netprivate v0.1.0 h1:fHVRlGTjoHjXxR89To4QDu/igguLkPfCrYaKCXEVqDY=
 github.com/ilijamt/netprivate v0.1.0/go.mod h1:obKz9HQ69QXa1rOoqBLWhcsM6kqZOw3YFQhqJrwlHF8=
 github.com/inconshreveable/mousetrap v1.0.0 h1:Z8tu5sraLXCXIcARxBp/8cbvlwVa7Z1NHg9XEKhtSvM=
