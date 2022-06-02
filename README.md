@@ -53,12 +53,12 @@ Use "blacklist-checker [command] --help" for more information about a command.  
 #### IP 
 
 ```bash
-$ blacklist-checker ip 46.217.104.208
+$ blacklist-checker check ip 46.217.104.208
 12:51AM INF processing dsnbl=56 queries=56
 12:51AM WRN  blacklisted=true dnsbl=b.barracudacentral.org ip=46.217.104.208 responses=["127.0.0.2"]
 12:51AM WRN  blacklisted=true dnsbl=pbl.spamhaus.org ip=46.217.104.208 responses=["127.0.0.11"]
 12:51AM WRN  blacklisted=true dnsbl=zen.spamhaus.org ip=46.217.104.208 responses=["127.0.0.11"]
-12:51AM INF Finished blacklisted=3 queries=56                                                                                                                                                                                            /2.6s
+12:51AM INF Finished blacklisted=3 queries=56
 ```
 
 #### CIDR
@@ -78,7 +78,7 @@ $ blacklist-checker check cidr 46.217.104.208/28
 ...
 12:52AM WRN  blacklisted=true dnsbl=zen.spamhaus.org ip=46.217.104.222 responses=["127.0.0.11"]
 12:52AM WRN  blacklisted=true dnsbl=zen.spamhaus.org ip=46.217.104.218 responses=["127.0.0.11"]
-12:52AM INF Finished blacklisted=51 queries=896                                                                                                                                                                                         /17.8s
+12:52AM INF Finished blacklisted=51 queries=896
 ```
 
 #### Blacklist file format
