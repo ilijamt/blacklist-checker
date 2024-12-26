@@ -53,7 +53,7 @@ Use "blacklist-checker [command] --help" for more information about a command.  
 #### IP 
 
 ```bash
-$ blacklist-checker ip 46.217.104.208
+$ blacklist-checker check ip 46.217.104.208
 12:51AM INF processing dsnbl=56 queries=56
 12:51AM WRN  blacklisted=true dnsbl=b.barracudacentral.org ip=46.217.104.208 responses=["127.0.0.2"]
 12:51AM WRN  blacklisted=true dnsbl=pbl.spamhaus.org ip=46.217.104.208 responses=["127.0.0.11"]
